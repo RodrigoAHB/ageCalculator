@@ -6,6 +6,8 @@
     // VARIABLES
     const date = new Date()
     const yearNow = date.getFullYear();
+    const monthNow = date.getMonth()+1
+    const dayNow = date.getDate()
     const dayInput = ref();
     const monthInput = ref();
     const yearInput = ref();
@@ -16,6 +18,7 @@
     const dayEmptyError = ref(false)
     const monthEmptyError = ref(false)
     const yearEmptyError = ref(false)
+    const future = ref(false)
 
     async function checkInputs(ev){
         ev.preventDefault()
@@ -231,6 +234,18 @@
             checkMonth(monthInput.value)
             return false
         } else {
+            if(yearInput.value === yearNow){
+                if(monthInput.value > monthNow){
+                    return false
+                } else if (monthInput.value === monthNow){
+                    if(dayInput.value > dayNow){
+                        future.value = true
+                        yearErrorMessage.value = true
+                        return false
+                    }
+                }
+            } 
+            future.value = false
             yearEmptyError.value = false
             yearErrorMessage.value = false
             const isMonthCorret = checkMonth(monthInput.value)
@@ -246,24 +261,26 @@
 <template>
         <form @submit="checkInputs">
             <div class="form__labels">
-                <label for="day" :class="{form__label: (!dayErrorMessage || !dayEmptyError), form__label__error: (dayEmptyError || dayErrorMessage)}">DAY</label>
-                <label for="month" :class="{form__label: !monthErrorMessage, form__label__error: (monthEmptyError || monthErrorMessage)}">MONTH</label>
+                <label for="day" :class="{form__label: (!dayErrorMessage || !dayEmptyError), form__label__error: (dayEmptyError || dayErrorMessage || future)}">DAY</label>
+                <label for="month" :class="{form__label: !monthErrorMessage, form__label__error: (monthEmptyError || monthErrorMessage || future)}">MONTH</label>
                 <label for="year" :class="{form__label: (!yearEmptyError || !yearErrorMessage), form__label__error: (yearEmptyError || yearErrorMessage)}">YEAR</label>
             </div>
             <div class="form__inputs">
-                <input type="number" name="day" id="day" placeholder="DD" v-model="dayInput" :class="{form__input: (!dayEmptyError || !dayErrorMessage), form__input__error: (dayEmptyError || dayErrorMessage)}">
-                <input type="number" name="month" id="month" placeholder="MM" v-model="monthInput" class="form__input" :class="{form__input: (!monthEmptyError || !monthErrorMessage), form__input__error: (monthEmptyError || monthErrorMessage)}">
+                <input type="number" name="day" id="day" placeholder="DD" v-model="dayInput" :class="{form__input: (!dayEmptyError || !dayErrorMessage), form__input__error: (dayEmptyError || dayErrorMessage || future)}">
+                <input type="number" name="month" id="month" placeholder="MM" v-model="monthInput" class="form__input" :class="{form__input: (!monthEmptyError || !monthErrorMessage), form__input__error: (monthEmptyError || monthErrorMessage || future)}">
                 <input type="number" name="month" id="year" placeholder="YYYY" v-model="yearInput"
                 class="form__input" :class="{form__input: (!yearEmptyError || !yearErrorMessage), form__input__error: (yearEmptyError || yearErrorMessage)}">
             </div>
             <div v-if="inputHasError" class="form__inputs--error">
                 <p v-if="dayErrorMessage">Must be a valid day</p>
                 <p v-else-if="dayEmptyError">This field is required</p>
+                <p v-else-if="future">Must be in the past</p>
                 <p v-else></p>
                 <p v-if="monthErrorMessage">Must be a valid month</p>
                 <p v-else-if="monthEmptyError">This field is required</p>
+                <p v-else-if="future">Must be in the past</p>
                 <p v-else></p>
-                <p v-if="yearErrorMessage">Must be a in the past</p>
+                <p v-if="yearErrorMessage">Must be in the past</p>
                 <p v-else-if="yearEmptyError">This field is required</p>
                 <p v-else></p>
             </div>
