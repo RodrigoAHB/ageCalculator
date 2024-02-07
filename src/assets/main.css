@@ -11,4 +11,5 @@
   height: 100vh;
   padding-top: 90px;
   background-color: hsl(0, 0%, 94%);
+  min-width: 375px;
 }

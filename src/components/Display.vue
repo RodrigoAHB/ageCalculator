@@ -25,4 +25,14 @@ const props = defineProps(['ageYears', 'ageMonths', 'ageDays', 'isVoid'])
             color: $purple;
         }
     }
+
+    @media screen and (max-width: 720px){
+        .display{
+            margin-top: 50px;
+            p{
+                font-size: 54px;
+                margin-left: 24px;
+            }
+        }
+    }
 </style>

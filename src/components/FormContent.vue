@@ -384,4 +384,52 @@ input::-webkit-inner-spin-button {
         }
     }
 }
+
+@media screen and (max-width: 720px){   
+    .form__labels, .form__inputs, .form__inputs--error{
+        display: grid;
+        grid-template-columns: 2fr 2fr 2fr;
+        padding-left: 1.3rem;
+    }
+
+    .form__inputs{
+        input{
+            width: 90px;
+            padding-left: 10px;
+            font-size: 28px;
+            height: 54px;
+        }
+    }
+
+    .form__button{
+        margin-top: 16px;
+        display: block;
+
+        hr{
+            width: 80%;
+            min-width: 300px;
+            position: absolute;
+            margin-left: 22px;
+        }
+
+        button{
+            position: relative;
+            top: 8px;
+            height: 65px;
+            width: 65px;
+
+            img{
+                height: 30px;
+            }
+        }
+    }
+
+    .form__inputs--error{
+    margin-top: 8px;
+    font-size: 10px;
+    color: $lightRed;
+    font-style: italic;
+    font-weight: 200;
+    }
+}
 </style>

@@ -48,4 +48,13 @@
   border-radius: 20px 20px 200px 20px;
   padding: 30px 45px;
 }
+
+@media screen and (max-width: 720px){
+  .container{
+    width: 92%;
+    padding: 60px 0 0 0;
+    border-radius: 20px 20px 100px 20px;
+    min-width: 345px;
+  }
+}
 </style>
