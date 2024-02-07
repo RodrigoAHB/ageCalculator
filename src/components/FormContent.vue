@@ -236,6 +236,8 @@
         } else {
             if(yearInput.value === yearNow){
                 if(monthInput.value > monthNow){
+                    future.value = true
+                    yearErrorMessage.value = true
                     return false
                 } else if (monthInput.value === monthNow){
                     if(dayInput.value > dayNow){
